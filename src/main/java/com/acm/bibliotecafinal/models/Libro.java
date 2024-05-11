@@ -27,6 +27,8 @@ public class Libro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column
+    String titulo;
+    @Column
     LocalDate añoPublicacion;
     @Column
     int disponibilidad;

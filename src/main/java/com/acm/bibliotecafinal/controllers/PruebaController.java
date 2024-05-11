@@ -4,20 +4,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.acm.bibliotecafinal.models.Autor;
 import com.acm.bibliotecafinal.models.Categoria;
-import com.acm.bibliotecafinal.models.Cliente;
 import com.acm.bibliotecafinal.models.Editorial;
 import com.acm.bibliotecafinal.models.Libro;
-import com.acm.bibliotecafinal.models.Reseña;
 import com.acm.bibliotecafinal.services.IAutorService;
 import com.acm.bibliotecafinal.services.ICategoriaService;
-import com.acm.bibliotecafinal.services.IClienteService;
 import com.acm.bibliotecafinal.services.IEditorialService;
 import com.acm.bibliotecafinal.services.ILibroService;
-import com.acm.bibliotecafinal.services.IPrestamoService;
-import com.acm.bibliotecafinal.services.IReseñaService;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

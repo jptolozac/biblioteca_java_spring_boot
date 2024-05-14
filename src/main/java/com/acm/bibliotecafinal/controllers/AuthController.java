@@ -48,7 +48,7 @@ public class AuthController {
         Autor autor = new Autor();
         Categoria categoria = new Categoria();
         Editorial editorial =new Editorial("ww","wq");
-        List prestamos = new Prestamo();
+       //List prestamos = new Prestamo();
         
         Libro libro = Libro.builder()   
         .añoPublicacion(libroDTO.getAñoPublicacion())
@@ -56,8 +56,8 @@ public class AuthController {
         .titulo(libroDTO.getTitulo())
         .autor(autor)
         .categoria(categoria)
-        .editorial(editorial)
-        .prestamos(prestamos)
+        .editorial(null)
+        .prestamos(null)
         .reseñas(null)
         .build();
         libroService.agregar(libro);

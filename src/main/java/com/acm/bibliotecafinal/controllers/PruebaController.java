@@ -11,7 +11,6 @@ import com.acm.bibliotecafinal.services.ICategoriaService;
 import com.acm.bibliotecafinal.services.IEditorialService;
 import com.acm.bibliotecafinal.services.ILibroService;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.acm.bibliotecafinal.dto.ClienteDTO;
 import com.acm.bibliotecafinal.dto.LibroDTO;
+import com.acm.bibliotecafinal.dto.ReseñaDTO;
 import com.acm.bibliotecafinal.models.Autor;
 import com.acm.bibliotecafinal.models.Categoria;
 import com.acm.bibliotecafinal.models.Cliente;
@@ -16,6 +17,7 @@ import com.acm.bibliotecafinal.models.Rol;
 import com.acm.bibliotecafinal.models.RolEnum;
 import com.acm.bibliotecafinal.services.IClienteService;
 import com.acm.bibliotecafinal.services.ILibroService;
+import com.acm.bibliotecafinal.services.IReseñaService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -37,18 +39,16 @@ public class AuthController {
     @Autowired
     IClienteService clienteService;
     ILibroService   libroService;
+    IReseñaService reseñaService;
     
 
     @GetMapping("login")
     public String login() {
         return "Logueado de un endpoint publico";
     }
-    @PostMapping("agregarlibro")
 
+    @PostMapping("agregarlibro")
        public ResponseEntity<Libro> agregarlibro(@RequestBody@valid LibroDTO libroDTO){
-      
-      
-       
         Autor autor = new Autor();
         Categoria categoria = new Categoria();
         Editorial editorial =new Editorial("ww","wq");
@@ -65,20 +65,32 @@ public class AuthController {
         .prestamos(null)
         .reseñas(null)
         .build();
-        try {
+        try {      
+            libroService.agregar(libro);      
+        } catch (Exception e) {
         
-        libroService.agregar(libro);
-        
-    } catch (Exception e) {
-        
-       }
-       return ResponseEntity.ok(libro);
         }
-    
-    @GetMapping("reseña")
-    public String reseña() {
-        return "Logueado de un endpoint publico";
+       return ResponseEntity.ok(libro);
     }
+
+    @PostMapping("agregarreseña")
+       public ResponseEntity<Reseña> agregarReseña(@RequestBody@valid ReseñaDTO reseñaDTO){
+        Cliente cliente = new Cliente();
+        Libro libro = new Libro();
+        Reseña reseña = Reseña.builder()
+        .descripcion(reseñaDTO.getDescripcion())
+        .titulo(reseñaDTO.getTitulo())
+        .cliente(cliente)
+        .libro(libro)
+        .build();
+        try {
+            reseñaService.agregar(reseña);       
+        } catch (Exception e) {
+        
+        }
+       return ResponseEntity.ok(reseña);
+    }
+
     @PostMapping("register")
     public ResponseEntity<Cliente> register(@RequestBody@Valid ClienteDTO clienteDTO) {
         Cliente cliente = Cliente.builder()

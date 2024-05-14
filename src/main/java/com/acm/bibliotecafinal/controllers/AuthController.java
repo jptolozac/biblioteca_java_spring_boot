@@ -18,6 +18,7 @@ import com.acm.bibliotecafinal.services.IClienteService;
 import com.acm.bibliotecafinal.services.ILibroService;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -45,13 +46,17 @@ public class AuthController {
     @PostMapping("agregarlibro")
 
        public ResponseEntity<Libro> agregarlibro(@RequestBody@valid LibroDTO libroDTO){
+      
+      
+       
         Autor autor = new Autor();
         Categoria categoria = new Categoria();
         Editorial editorial =new Editorial("ww","wq");
        //List prestamos = new Prestamo();
-        
-        Libro libro = Libro.builder()   
-        .añoPublicacion(libroDTO.getAñoPublicacion())
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        LocalDate localDate= LocalDate.parse(String.valueOf( libroDTO.getAñoPublicacion()), formatter);
+        Libro libro = Libro.builder()
+        .añoPublicacion(localDate.toString())
         .disponibilidad(libroDTO.getDisponibilidad())
         .titulo(libroDTO.getTitulo())
         .autor(autor)
@@ -60,8 +65,14 @@ public class AuthController {
         .prestamos(null)
         .reseñas(null)
         .build();
+        try {
+        
         libroService.agregar(libro);
-        return ResponseEntity.ok(libro);
+        
+    } catch (Exception e) {
+        
+       }
+       return ResponseEntity.ok(libro);
         }
     
     @GetMapping("reseña")

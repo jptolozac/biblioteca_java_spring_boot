@@ -27,7 +27,7 @@ public class Categoria {
     int id;
     @Column
     String nombre;
-    @Column
+    @Column(length = 1000)
     String descripcion;
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JsonIgnore

@@ -21,7 +21,7 @@ public class Reseña {
     int id;
     @Column
     String titulo;
-    @Column
+    @Column(length = 1000)
     String descripcion;
     @ManyToOne
     Cliente cliente;

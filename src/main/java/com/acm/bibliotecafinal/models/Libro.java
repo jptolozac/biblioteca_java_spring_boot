@@ -1,6 +1,5 @@
 package com.acm.bibliotecafinal.models;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,7 +28,7 @@ public class Libro {
     @Column
     String titulo;
     @Column
-    LocalDate añoPublicacion;
+    String añoPublicacion;
     @Column
     int disponibilidad;
     @ManyToOne
@@ -48,7 +47,7 @@ public class Libro {
     @JsonIgnore
     List<Prestamo> prestamos;
     
-    public Libro(LocalDate añoPublicacion, int disponibilidad, Categoria categoria, Autor autor,
+    public Libro(String añoPublicacion, int disponibilidad, Categoria categoria, Autor autor,
             Editorial editorial) {
         this.añoPublicacion = añoPublicacion;
         this.disponibilidad = disponibilidad;

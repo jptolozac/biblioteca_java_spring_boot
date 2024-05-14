@@ -46,7 +46,7 @@ public class PruebaController {
             Autor autor = new Autor("nombre", "pais");
             autor = autorService.agregar(autor);
 
-            Libro libro = new Libro(LocalDate.now(), 1, categoria, autor, editorial);
+            Libro libro = new Libro("2024", 1, categoria, autor, editorial);
             libro = libroService.agregar(libro);
         }
         /* Editorial nuevaEditorial = new Editorial();

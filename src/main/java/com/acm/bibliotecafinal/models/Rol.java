@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Rol {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
     @Enumerated
     RolEnum rol;
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})

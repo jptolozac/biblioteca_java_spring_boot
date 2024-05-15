@@ -38,7 +38,6 @@ public class LibroController {
     @Autowired
     EditorialService editorialService;
 
-
     @GetMapping("")
     public ResponseEntity<List<Libro>> getUsuarios() {
         return ResponseEntity.ok().body(libroService.listar());
@@ -48,71 +47,76 @@ public class LibroController {
     public ResponseEntity<Libro> getLibro(@PathVariable int id) {
         return ResponseEntity.ok().body(libroService.get(id));
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Libro> deltelibro(@PathVariable int id) {
+    public ResponseEntity<Response> deltelibro(@PathVariable int id) {
         Response response = null;
         Libro libro = libroService.get(id);
-        
-        try {    
+
+        try {
             libroService.Eliminar(libro);
-    } catch (Exception e) {
-        response = new Response(true, e.getMessage());
-        
+            response = new Response(false, "Se eliminó el libro con id " + libro.getId() + " correctamente");
+        } catch (Exception e) {
+            response = new Response(true, e.getMessage());
+            return ResponseEntity.internalServerError().body(response);
+        }
+
+        return ResponseEntity.ok(response);
     }
-        return ResponseEntity.ok(libro);
-    }
+
     @PutMapping("/editar")
-    public ResponseEntity<Libro> editarlibro(@RequestBody@valid LibroDTO libroDTO){
-     Response response = null;
-     Categoria categoria = categoriaService.get(libroDTO.getCategoria());
-     Autor autor =autorService.get(libroDTO.getAutor());
-     Editorial editorial =editorialService.get(libroDTO.getEditorial()) ;
-     // List prestamos = new Prestamo();
-     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
-     LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
-     Libro libro = Libro.builder()
-     .id(libroDTO.getId())
-     .añoPublicacion(localDate.toString())
-     .disponibilidad(libroDTO.getDisponibilidad())
-     .titulo(libroDTO.getTitulo())
-     .autor(autor)
-     .categoria(categoria)
-     .editorial(editorial)
-     .prestamos(null)
-     .reseñas(null)
-     .build();
-     try {    
-             libroService.actualizar(libro);      
-     } catch (Exception e) {
-         response = new Response(true, e.getMessage());
-     }
-    return ResponseEntity.ok(libro);
- }
-    @PostMapping("/agregar")
-       public ResponseEntity<Libro> agregarlibro(@RequestBody@valid LibroDTO libroDTO){
+    public ResponseEntity<Libro> editarlibro(@RequestBody @valid LibroDTO libroDTO) {
         Response response = null;
         Categoria categoria = categoriaService.get(libroDTO.getCategoria());
-        Autor autor =autorService.get(libroDTO.getAutor());
-        Editorial editorial =editorialService.get(libroDTO.getEditorial()) ;
+        Autor autor = autorService.get(libroDTO.getAutor());
+        Editorial editorial = editorialService.get(libroDTO.getEditorial());
         // List prestamos = new Prestamo();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
         LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
         Libro libro = Libro.builder()
-        .añoPublicacion(localDate.toString())
-        .disponibilidad(libroDTO.getDisponibilidad())
-        .titulo(libroDTO.getTitulo())
-        .autor(autor)
-        .categoria(categoria)
-        .editorial(editorial)
-        .prestamos(null)
-        .reseñas(null)
-        .build();
-        try {    
-                libroService.agregar(libro);      
+                .id(libroDTO.getId())
+                .añoPublicacion(localDate.toString())
+                .disponibilidad(libroDTO.getDisponibilidad())
+                .titulo(libroDTO.getTitulo())
+                .autor(autor)
+                .categoria(categoria)
+                .editorial(editorial)
+                .prestamos(null)
+                .reseñas(null)
+                .build();
+        try {
+            libroService.actualizar(libro);
         } catch (Exception e) {
             response = new Response(true, e.getMessage());
         }
-       return ResponseEntity.ok(libro);
+        return ResponseEntity.ok(libro);
+    }
+
+    @PostMapping("/agregar")
+    public ResponseEntity<Libro> agregarlibro(@RequestBody @valid LibroDTO libroDTO) {
+        Response response = null;
+        Categoria categoria = categoriaService.get(libroDTO.getCategoria());
+        Autor autor = autorService.get(libroDTO.getAutor());
+        Editorial editorial = editorialService.get(libroDTO.getEditorial());
+        // List prestamos = new Prestamo();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
+        Libro libro = Libro.builder()
+                .añoPublicacion(localDate.toString())
+                .disponibilidad(libroDTO.getDisponibilidad())
+                .titulo(libroDTO.getTitulo())
+                .autor(autor)
+                .categoria(categoria)
+                .editorial(editorial)
+                .prestamos(null)
+                .reseñas(null)
+                .build();
+        try {
+            libroService.agregar(libro);
+        } catch (Exception e) {
+            response = new Response(true, e.getMessage());
+        }
+        return ResponseEntity.ok(libro);
     }
 
 }

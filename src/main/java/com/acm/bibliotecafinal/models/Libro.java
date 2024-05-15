@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,10 +42,10 @@ public class Libro {
     @ManyToOne
     // @JsonIgnore
     Editorial editorial;
-    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore
     List<Reseña> reseñas;
-    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore
     List<Prestamo> prestamos;
     

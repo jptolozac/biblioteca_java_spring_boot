@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.acm.bibliotecafinal.dto.ClienteDTO;
 import com.acm.bibliotecafinal.dto.LibroDTO;
+import com.acm.bibliotecafinal.dto.ReseñaDTO;
 import com.acm.bibliotecafinal.models.Autor;
 import com.acm.bibliotecafinal.models.Categoria;
 import com.acm.bibliotecafinal.models.Cliente;
@@ -16,6 +17,7 @@ import com.acm.bibliotecafinal.models.Rol;
 import com.acm.bibliotecafinal.models.RolEnum;
 import com.acm.bibliotecafinal.services.IClienteService;
 import com.acm.bibliotecafinal.services.ILibroService;
+import com.acm.bibliotecafinal.services.IReseñaService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +37,9 @@ import jakarta.validation.Valid;
 public class AuthController {
     @Autowired
     IClienteService clienteService;
-    ILibroService libroService;
+    ILibroService   libroService;
+    IReseñaService reseñaService;
+    
 
     @GetMapping("login")
     public String login() {
@@ -43,9 +47,7 @@ public class AuthController {
     }
 
     @PostMapping("agregarlibro")
-
-    public ResponseEntity<Libro> agregarlibro(@RequestBody @valid LibroDTO libroDTO) {
-
+       public ResponseEntity<Libro> agregarlibro(@RequestBody@valid LibroDTO libroDTO){
         Autor autor = new Autor();
         Categoria categoria = new Categoria();
         Editorial editorial = new Editorial("ww", "wq");
@@ -53,28 +55,39 @@ public class AuthController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
         LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
         Libro libro = Libro.builder()
-                .añoPublicacion(localDate.toString())
-                .disponibilidad(libroDTO.getDisponibilidad())
-                .titulo(libroDTO.getTitulo())
-                .autor(autor)
-                .categoria(categoria)
-                .editorial(null)
-                .prestamos(null)
-                .reseñas(null)
-                .build();
-        try {
-
-            libroService.agregar(libro);
-
+        .añoPublicacion(localDate.toString())
+        .disponibilidad(libroDTO.getDisponibilidad())
+        .titulo(libroDTO.getTitulo())
+        .autor(autor)
+        .categoria(categoria)
+        .editorial(null)
+        .prestamos(null)
+        .reseñas(null)
+        .build();
+        try {      
+            libroService.agregar(libro);      
         } catch (Exception e) {
-
+        
         }
-        return ResponseEntity.ok(libro);
+       return ResponseEntity.ok(libro);
     }
 
-    @GetMapping("reseña")
-    public String reseña() {
-        return "Logueado de un endpoint publico";
+    @PostMapping("agregarreseña")
+       public ResponseEntity<Reseña> agregarReseña(@RequestBody@valid ReseñaDTO reseñaDTO){
+        Cliente cliente = new Cliente();
+        Libro libro = new Libro();
+        Reseña reseña = Reseña.builder()
+        .descripcion(reseñaDTO.getDescripcion())
+        .titulo(reseñaDTO.getTitulo())
+        .cliente(cliente)
+        .libro(libro)
+        .build();
+        try {
+            reseñaService.agregar(reseña);       
+        } catch (Exception e) {
+        
+        }
+       return ResponseEntity.ok(reseña);
     }
 
     @PostMapping("register")

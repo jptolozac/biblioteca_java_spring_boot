@@ -29,67 +29,65 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 
-
 @RestController
 @RequestMapping("/auth")
 
 public class AuthController {
     @Autowired
     IClienteService clienteService;
-    ILibroService   libroService;
-    
+    ILibroService libroService;
 
     @GetMapping("login")
     public String login() {
         return "Logueado de un endpoint publico";
     }
+
     @PostMapping("agregarlibro")
 
-       public ResponseEntity<Libro> agregarlibro(@RequestBody@valid LibroDTO libroDTO){
-      
-      
-       
+    public ResponseEntity<Libro> agregarlibro(@RequestBody @valid LibroDTO libroDTO) {
+
         Autor autor = new Autor();
         Categoria categoria = new Categoria();
-        Editorial editorial =new Editorial("ww","wq");
-       //List prestamos = new Prestamo();
+        Editorial editorial = new Editorial("ww", "wq");
+        // List prestamos = new Prestamo();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
-        LocalDate localDate= LocalDate.parse(String.valueOf( libroDTO.getAñoPublicacion()), formatter);
+        LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
         Libro libro = Libro.builder()
-        .añoPublicacion(localDate.toString())
-        .disponibilidad(libroDTO.getDisponibilidad())
-        .titulo(libroDTO.getTitulo())
-        .autor(autor)
-        .categoria(categoria)
-        .editorial(null)
-        .prestamos(null)
-        .reseñas(null)
-        .build();
+                .añoPublicacion(localDate.toString())
+                .disponibilidad(libroDTO.getDisponibilidad())
+                .titulo(libroDTO.getTitulo())
+                .autor(autor)
+                .categoria(categoria)
+                .editorial(null)
+                .prestamos(null)
+                .reseñas(null)
+                .build();
         try {
-        
-        libroService.agregar(libro);
-        
-    } catch (Exception e) {
-        
-       }
-       return ResponseEntity.ok(libro);
+
+            libroService.agregar(libro);
+
+        } catch (Exception e) {
+
         }
-    
+        return ResponseEntity.ok(libro);
+    }
+
     @GetMapping("reseña")
     public String reseña() {
         return "Logueado de un endpoint publico";
     }
+
     @PostMapping("register")
-    public ResponseEntity<Cliente> register(@RequestBody@Valid ClienteDTO clienteDTO) {
+    public ResponseEntity<Cliente> register(@RequestBody @Valid ClienteDTO clienteDTO) {
         Cliente cliente = Cliente.builder()
-            .cedula(clienteDTO.getCedula())
-            .nombre(clienteDTO.getNombre())
-            .correo(clienteDTO.getCorreo())
-            .telefono(clienteDTO.getTelefono())
-            .contraseña(clienteDTO.getContraseña())
-            .rol(new ArrayList<>())
-            .estadoCuenta("activo")
-            .build();
+                .cedula(clienteDTO.getCedula())
+                .nombre(clienteDTO.getNombre())
+                .correo(clienteDTO.getCorreo())
+                .telefono(clienteDTO.getTelefono())
+                .contraseña(clienteDTO.getContraseña())
+                .rol(new ArrayList<>())
+                .estadoCuenta("activo")
+                .build();
 
         cliente.getRol().add(Rol.builder().rol(RolEnum.valueOf(clienteDTO.getRol())).cliente(cliente).build());
         clienteService.agregar(cliente);

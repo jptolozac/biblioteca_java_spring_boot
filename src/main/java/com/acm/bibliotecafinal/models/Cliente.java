@@ -12,12 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 
 @Entity
@@ -56,4 +58,11 @@ public class Cliente {
         this.telefono = telefono;
         this.estadoCuenta = estadoCuenta;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente [cedula=" + cedula + ", nombre=" + nombre + ", correo=" + correo + ", contraseña=" + contraseña
+                + ", telefono=" + telefono + ", estadoCuenta=" + estadoCuenta + "]";
+    }   
+    
 }

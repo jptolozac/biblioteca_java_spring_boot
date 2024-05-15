@@ -14,15 +14,17 @@ import lombok.NoArgsConstructor;
 @Builder
 public class LibroDTO {
     @NotBlank
+    int id;
+    @NotBlank
     String titulo;
     @NotBlank
     LocalDate añoPublicacion;
     @NotBlank
     int disponibilidad;
     @NotBlank
-    String categoria;
+    int categoria;
     @NotBlank
-    String autor;
+    int autor;
     @NotBlank
-    String editorial;
+    int editorial;
 }

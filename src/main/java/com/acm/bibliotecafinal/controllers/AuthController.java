@@ -46,50 +46,8 @@ public class AuthController {
         return "Logueado de un endpoint publico";
     }
 
-    @PostMapping("agregarlibro")
-       public ResponseEntity<Libro> agregarlibro(@RequestBody@valid LibroDTO libroDTO){
-        Autor autor = new Autor();
-        Categoria categoria = new Categoria();
-        Editorial editorial = new Editorial("ww", "wq");
-        // List prestamos = new Prestamo();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
-        LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
-        Libro libro = Libro.builder()
-        .añoPublicacion(localDate.toString())
-        .disponibilidad(libroDTO.getDisponibilidad())
-        .titulo(libroDTO.getTitulo())
-        .autor(autor)
-        .categoria(categoria)
-        .editorial(null)
-        .prestamos(null)
-        .reseñas(null)
-        .build();
-        try {      
-            libroService.agregar(libro);      
-        } catch (Exception e) {
-        
-        }
-       return ResponseEntity.ok(libro);
-    }
-
-    @PostMapping("agregarreseña")
-       public ResponseEntity<Reseña> agregarReseña(@RequestBody@valid ReseñaDTO reseñaDTO){
-        Cliente cliente = new Cliente();
-        Libro libro = new Libro();
-        Reseña reseña = Reseña.builder()
-        .descripcion(reseñaDTO.getDescripcion())
-        .titulo(reseñaDTO.getTitulo())
-        .cliente(cliente)
-        .libro(libro)
-        .build();
-        try {
-            reseñaService.agregar(reseña);       
-        } catch (Exception e) {
-        
-        }
-       return ResponseEntity.ok(reseña);
-    }
-
+    
+    
     @PostMapping("register")
     public ResponseEntity<Cliente> register(@RequestBody @Valid ClienteDTO clienteDTO) {
         Cliente cliente = Cliente.builder()

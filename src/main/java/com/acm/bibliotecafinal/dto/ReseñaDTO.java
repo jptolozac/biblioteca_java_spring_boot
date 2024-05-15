@@ -17,6 +17,6 @@ public class ReseñaDTO {
     @NotBlank
     String cliente_cedula;
     @NotBlank
-    String libro_id;
+    int libro_id;
     
 }

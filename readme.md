@@ -18,7 +18,7 @@
 
 #### Pedir prestamo de un libro
 
-```http
+```
   POST http://localhost:8087/prestamos
 ```
 
@@ -30,13 +30,13 @@
 
 #### Consultar todos los libros
 
-```http
+```
   GET http://localhost:8087/libros
 ```
 
 #### Consultar libro por id
 
-```http
+```
   GET http://localhost:8087/libros/${id}
 ```
 

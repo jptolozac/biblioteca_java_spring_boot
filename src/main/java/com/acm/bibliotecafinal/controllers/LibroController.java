@@ -3,6 +3,7 @@ package com.acm.bibliotecafinal.controllers;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +45,12 @@ public class LibroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Libro> getLibro(@PathVariable int id) {
-        return ResponseEntity.ok().body(libroService.get(id));
+    public ResponseEntity<Response> getLibro(@PathVariable int id) {
+        try {
+            return ResponseEntity.ok().body(new Response(false, libroService.get(id)));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.badRequest().body(new Response(true, "Libro no encontrado"));
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -66,12 +71,12 @@ public class LibroController {
 
     @PutMapping("/editar")
     public ResponseEntity<Libro> editarlibro(@RequestBody @valid LibroDTO libroDTO) {
-        Response response = null;
+        // Response response = null;
         Categoria categoria = categoriaService.get(libroDTO.getCategoria());
         Autor autor = autorService.get(libroDTO.getAutor());
         Editorial editorial = editorialService.get(libroDTO.getEditorial());
         // List prestamos = new Prestamo();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
         Libro libro = Libro.builder()
                 .id(libroDTO.getId())
@@ -87,20 +92,23 @@ public class LibroController {
         try {
             libroService.actualizar(libro);
         } catch (Exception e) {
-            response = new Response(true, e.getMessage());
+            // response = new Response(true, e.getMessage());
+            // System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return ResponseEntity.ok(libro);
     }
 
     @PostMapping("/agregar")
     public ResponseEntity<Libro> agregarlibro(@RequestBody @valid LibroDTO libroDTO) {
-        Response response = null;
+        // Response response = null;
         Categoria categoria = categoriaService.get(libroDTO.getCategoria());
         Autor autor = autorService.get(libroDTO.getAutor());
         Editorial editorial = editorialService.get(libroDTO.getEditorial());
         // List prestamos = new Prestamo();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-dd-MM");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(String.valueOf(libroDTO.getAñoPublicacion()), formatter);
+        
         Libro libro = Libro.builder()
                 .añoPublicacion(localDate.toString())
                 .disponibilidad(libroDTO.getDisponibilidad())
@@ -114,7 +122,8 @@ public class LibroController {
         try {
             libroService.agregar(libro);
         } catch (Exception e) {
-            response = new Response(true, e.getMessage());
+            // response = new Response(true, e.getMessage());
+            e.printStackTrace();
         }
         return ResponseEntity.ok(libro);
     }

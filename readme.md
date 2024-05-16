@@ -53,7 +53,7 @@
 | Parameter | Type     | Description                           |
 | :-------- | :------- | :------------------------------------ |
 | `añoPublicacion`      | `string` | **Required**.  Fecha del año  de la publicación en formato "yyyy-mm-dd"  |
-| `disponibilidad`      | `string` | **Required**. Disponibilidad |
+| `disponibilidad`      | `int` | **Required**. Disponibilidad |
 | `titulo`      | `string` | **Required**. Título del libro |
 | `autor`      | `int` | **Required**. Id del autor libro para  agregar |
 | `categoria`      | `int` | **Required**. Id de la categoria libro para  agregar  |
@@ -69,7 +69,7 @@
 | :-------- | :------- | :------------------------------------ |
 | `id`      | `int` | **Required**.  Id del  libro para  editar"  |
 | `añoPublicacion`      | `string` |   Fecha del año  de la publicación en formato "yyyy-mm-dd"  |
-| `disponibilidad`      | `string` |  Disponibilidad |
+| `disponibilidad`      | `int` |  Disponibilidad |
 | `titulo`      | `string` |  Título del libro |
 | `autor`      | `int` |  Id del autor libro para  agregar |
 | `categoria`      | `int` | Id de la categoria libro para  agregar  |
